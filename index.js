@@ -72,6 +72,11 @@ class Hero extends Character {
     this.getHp();
     obj.takeDamage();
   }
+
+  reset() {
+    this.hp = 100;
+    this.attackTracker = 0;
+  }
 }
 
 class Villain extends Character {
@@ -90,6 +95,10 @@ class Villain extends Character {
   attack(obj) {
     this.getPower();
     obj.takeDamage();
+  }
+  reset() {
+    this.hp = 100;
+    this.attackTracker = 0;
   }
 }
 
@@ -229,6 +238,9 @@ reset.addEventListener("click", function () {
   result_1.innerHTML = "";
   player2.classList.remove("transparent");
   player1.classList.remove("transparent");
+
+  Levan.reset();
+  motamashe2.reset();
 });
 
 // console.log(Levan);
