@@ -19,6 +19,8 @@ const reset = document.querySelector(".reset");
 const overlay = document.querySelector(".overlay");
 const close_window = document.querySelector(".close_window");
 
+//==================Game Logic ================
+
 class Character {
   number = Math.trunc(Math.random() * 20) + 1;
   constructor(name, hp, power) {
@@ -52,6 +54,7 @@ class Character {
   }
 }
 
+// ============Child clases =================//
 class Hero extends Character {
   attackTracker = 0;
   constructor(name, hp, power) {
@@ -90,9 +93,16 @@ class Villain extends Character {
   }
 }
 
+//============ create 2 character ===========//
+
 const Levan = new Hero("Levan", 100, 100);
 
 const motamashe2 = new Villain("Player 2", 100, 100);
+
+// =========== working with Dom ==============//
+
+const resetNumber = 100;
+let playing = true;
 
 const addBorder = function (value, classs) {
   value.classList.add(classs);
@@ -101,78 +111,82 @@ const removeBorder = function (value, classs) {
   value.classList.remove(classs);
 };
 
-// const result = function () {
-//   if (motamashe2.hp <= 0) {
-//   }
-// };
-
-const resetNumber = 100;
+const infoBoxses = function (player1_hp, player2_hp, player1_pwr, player2_pwr) {
+  hpPlayer_1.innerHTML = player1_hp;
+  powerPlayer_1.innerHTML = player1_pwr;
+  powerPlayer_2.innerHTML = player2_pwr;
+  hpPlayer_2.innerHTML = player2_hp;
+};
 
 const attacker_1 = function () {
-  if (motamashe2.hp >= 0) {
-    Levan.attack(motamashe2);
-    hpPlayer_1.innerHTML = Levan.hp;
-    powerPlayer_2.innerHTML = motamashe2.power;
-    hpPlayer_2.innerHTML = motamashe2.hp;
-    removeBorder(player1Img, "red-border");
-    removeBorder(player2Img, "green-border");
-    addBorder(player2Img, "red-border");
-    addBorder(player1Img, "green-border");
-  } else {
-    console.log(`game is overr`);
-    player1.classList.add("transparent");
-    result_1.innerHTML = ` winner is ${Levan.name}`;
+  if (playing) {
+    if (motamashe2.hp >= 0) {
+      Levan.attack(motamashe2);
+      infoBoxses(Levan.hp, motamashe2.hp, Levan.power, motamashe2.power);
+      removeBorder(player1Img, "red-border");
+      removeBorder(player2Img, "green-border");
+      addBorder(player2Img, "red-border");
+      addBorder(player1Img, "green-border");
+    } else {
+      console.log(`game is overr`);
+      let playing = false;
+      player1.classList.add("transparent");
+      result_1.innerHTML = ` winner is ${Levan.name}`;
+    }
   }
 };
 
 const attacker_2 = function () {
-  if (Levan.hp >= 0) {
-    motamashe2.attack(Levan);
-    hpPlayer_1.innerHTML = Levan.hp;
-    powerPlayer_2.innerHTML = motamashe2.power;
-    hpPlayer_2.innerHTML = motamashe2.hp;
-    removeBorder(player2Img, "red-border");
-    removeBorder(player1Img, "green-border");
-    addBorder(player1Img, "red-border");
-    addBorder(player2Img, "green-border");
-  } else {
-    console.log(`game is overr`);
-    player2.classList.add("transparent");
-    result_2.innerHTML = ` winner is ${motamashe2.name}`;
+  if (playing) {
+    if (Levan.hp >= 0) {
+      motamashe2.attack(Levan);
+      infoBoxses(Levan.hp, motamashe2.hp, Levan.power, motamashe2.power);
+      removeBorder(player2Img, "red-border");
+      removeBorder(player1Img, "green-border");
+      addBorder(player1Img, "red-border");
+      addBorder(player2Img, "green-border");
+    } else {
+      console.log(`game is overr`);
+      let playing = false;
+      player2.classList.add("transparent");
+      result_2.innerHTML = ` winner is ${motamashe2.name}`;
+    }
   }
 };
 
 const attackerWithKey_1 = function (e) {
-  if (e.key === "d" && motamashe2.hp >= 0) {
-    Levan.attack(motamashe2);
-    hpPlayer_1.innerHTML = Levan.hp;
-    powerPlayer_2.innerHTML = motamashe2.power;
-    hpPlayer_2.innerHTML = motamashe2.hp;
-    removeBorder(player1Img, "red-border");
-    removeBorder(player2Img, "green-border");
-    addBorder(player2Img, "red-border");
-    addBorder(player1Img, "green-border");
-  } else if (e.key === "d" && motamashe2.hp <= 0) {
-    console.log(`game is over`);
-    player1.classList.add("transparent");
-    result_1.innerHTML = ` winner is ${Levan.name}`;
+  if (playing) {
+    if (e.key === "d" && motamashe2.hp >= 0) {
+      Levan.attack(motamashe2);
+      infoBoxses(Levan.hp, motamashe2.hp, Levan.power, motamashe2.power);
+      removeBorder(player1Img, "red-border");
+      removeBorder(player2Img, "green-border");
+      addBorder(player2Img, "red-border");
+      addBorder(player1Img, "green-border");
+    } else if (e.key === "d" && motamashe2.hp <= 0) {
+      console.log(`game is over`);
+      let playing = false;
+      player1.classList.add("transparent");
+      result_1.innerHTML = ` winner is ${Levan.name}`;
+    }
   }
 };
 
 const attackerWithKey_2 = function (e) {
-  if (e.key === "5" && Levan.hp >= 0) {
-    motamashe2.attack(Levan);
-    hpPlayer_1.innerHTML = Levan.hp;
-    powerPlayer_2.innerHTML = motamashe2.power;
-    hpPlayer_2.innerHTML = motamashe2.hp;
-    removeBorder(player2Img, "red-border");
-    removeBorder(player1Img, "green-border");
-    addBorder(player1Img, "red-border");
-    addBorder(player2Img, "green-border");
-  } else if (e.key === "5" && Levan.hp <= 0) {
-    console.log(`game is over`);
-    player2.classList.add("transparent");
-    result_2.innerHTML = ` winner is ${motamashe2.name}`;
+  if (playing) {
+    if (e.key === "5" && Levan.hp >= 0) {
+      motamashe2.attack(Levan);
+      infoBoxses(Levan.hp, motamashe2.hp, Levan.power, motamashe2.power);
+      removeBorder(player2Img, "red-border");
+      removeBorder(player1Img, "green-border");
+      addBorder(player1Img, "red-border");
+      addBorder(player2Img, "green-border");
+    } else if (e.key === "5" && Levan.hp <= 0) {
+      console.log(`game is over`);
+      let playing = false;
+      player2.classList.add("transparent");
+      result_2.innerHTML = ` winner is ${motamashe2.name}`;
+    }
   }
 };
 
@@ -202,19 +216,20 @@ close_window.addEventListener("click", function () {
   overlay.classList.add("hidden");
 });
 
-// reset.addEventListener("click", function () {
-//   console.log(`button clicked`);
-//   hpPlayer_1.innerHTML = resetNumber;
-//   powerPlayer_2.innerHTML = resetNumber;
-//   powerPlayer_1.innerHTML = resetNumber;
-//   hpPlayer_2.innerHTML = resetNumber;
-//   removeBorder(player2Img, "red-border");
-//   removeBorder(player1Img, "green-border");
-//   result_2.innerHTML = "";
-//   result_1.innerHTML = "";
-//   player2.classList.remove("transparent");
-//   player1.classList.remove("transparent");
-// });
+reset.addEventListener("click", function () {
+  console.log(`button clicked`);
+
+  hpPlayer_1.innerHTML = resetNumber;
+  powerPlayer_2.innerHTML = resetNumber;
+  powerPlayer_1.innerHTML = resetNumber;
+  hpPlayer_2.innerHTML = resetNumber;
+  removeBorder(player2Img, "red-border");
+  removeBorder(player1Img, "green-border");
+  result_2.innerHTML = "";
+  result_1.innerHTML = "";
+  player2.classList.remove("transparent");
+  player1.classList.remove("transparent");
+});
 
 // console.log(Levan);
 

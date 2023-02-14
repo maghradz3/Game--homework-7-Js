@@ -54,7 +54,7 @@
     height: 400px;
     border: 2px solid rebeccapurple;
     margin: 0 auto;
-    background-image: url(/images/pngwing.com.png);
+    background-image: url(../images/pngwing.com.png);
     background-position: center;
     background-size: cover;
     background-repeat: no-repeat;
@@ -65,7 +65,7 @@
     height: 400px;
     border: 2px solid rebeccapurple;
     margin: 0 auto;
-    background-image: url(/images/pngwing.com\ \(1\).png);
+    background-image: url(../images/woman.png);
     background-position: center;
     background-size: cover;
     background-repeat: no-repeat;
